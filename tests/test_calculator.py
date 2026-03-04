@@ -61,3 +61,24 @@ class TestPower:
     def test_base_zero_negative_exponent(self):
         with pytest.raises(ValueError, match="Cannot raise 0 to a negative power"):
             power(0, -1)
+
+
+from src.calculator import sqrt
+
+
+class TestSqrt:
+    def test_perfect_square(self):
+        assert sqrt(9) == 3.0
+
+    def test_non_perfect_square(self):
+        assert abs(sqrt(2) - 1.41421356) < 1e-5
+
+    def test_zero(self):
+        assert sqrt(0) == 0.0
+
+    def test_one(self):
+        assert sqrt(1) == 1.0
+
+    def test_negative_raises(self):
+        with pytest.raises(ValueError, match="Cannot compute square root of a negative number"):
+            sqrt(-4)
