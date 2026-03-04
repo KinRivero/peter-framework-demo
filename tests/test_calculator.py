@@ -37,3 +37,27 @@ class TestDivide:
     def test_division_by_zero(self):
         with pytest.raises(ValueError, match="Cannot divide by zero"):
             divide(10, 0)
+
+
+from src.calculator import power
+
+
+class TestPower:
+    def test_positive_exponent(self):
+        assert power(2, 3) == 8
+
+    def test_zero_exponent(self):
+        assert power(5, 0) == 1
+
+    def test_negative_exponent(self):
+        assert power(2, -1) == 0.5
+
+    def test_float_result(self):
+        assert power(4, 0.5) == 2.0
+
+    def test_base_zero(self):
+        assert power(0, 5) == 0
+
+    def test_base_zero_negative_exponent(self):
+        with pytest.raises(ValueError, match="Cannot raise 0 to a negative power"):
+            power(0, -1)
