@@ -61,3 +61,24 @@ class TestPower:
     def test_base_zero_negative_exponent(self):
         with pytest.raises(ValueError, match="Cannot raise 0 to a negative power"):
             power(0, -1)
+
+
+from src.calculator import modulo
+
+
+class TestModulo:
+    def test_positive_numbers(self):
+        assert modulo(10, 3) == 1
+
+    def test_even_division(self):
+        assert modulo(10, 5) == 0
+
+    def test_negative_dividend(self):
+        assert modulo(-10, 3) == 2  # Python modulo behavior
+
+    def test_float_inputs(self):
+        assert abs(modulo(5.5, 2.0) - 1.5) < 1e-9
+
+    def test_divisor_zero(self):
+        with pytest.raises(ValueError, match="Cannot compute modulo with divisor zero"):
+            modulo(10, 0)

@@ -43,3 +43,21 @@ def power(base: float, exponent: float) -> float:
     if base == 0 and exponent < 0:
         raise ValueError("Cannot raise 0 to a negative power")
     return base ** exponent
+
+
+def modulo(a: float, b: float) -> float:
+    """Return the remainder of a divided by b.
+
+    Args:
+        a: The dividend.
+        b: The divisor.
+
+    Returns:
+        The remainder of a / b.
+
+    Raises:
+        ValueError: If b is zero.
+    """
+    if b == 0:
+        raise ValueError("Cannot compute modulo with divisor zero")
+    return a % b
