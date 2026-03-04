@@ -1,56 +1,92 @@
-# PETER Framework Demo
+# Calculator API — PETER Framework Demo
 
-> "An issue goes in. A PR comes out. You were at lunch."
+> **"An issue goes in. A PR comes out. You were at lunch."**
 
-A minimal Python project demonstrating the **PETER Framework** for autonomous AI Developer Workflows (ADWs).
+A production-ready Python calculator with REST API, demonstrating the **PETER Framework** for autonomous AI Developer Workflows (ADWs).
 
-## What is PETER?
+## 🎯 What This Demonstrates
 
-| Element | Description |
-|---------|-------------|
-| **P**rompt input | GitHub Issue — title, body, labels |
-| **E**nvironment | Isolated execution space for agents |
-| **T**rigger | Webhook, cron, or manual script |
-| **R**eview | Pull Request — approval gate before merge |
+The PETER framework for building autonomous engineering pipelines:
 
-## The Flow
+| Element | Description | In This Repo |
+|---------|-------------|--------------|
+| **P**rompt input | Work request | GitHub Issues |
+| **E**nvironment | Execution space | This repo + git worktrees |
+| **T**rigger | What starts it | `adws/adw_sdlc.py` |
+| **R**eview | Validation gate | Pull Requests |
 
-```
-GitHub Issue → Classifier → Branch → Plan → Build → Test → PR
-```
-
-Zero human intervention. The complete SDLC runs autonomously.
-
-## Project Structure
-
-```
-peter-demo/
-├── src/
-│   └── calculator.py      # Simple calculator module
-├── tests/
-│   └── test_calculator.py  # Test suite
-├── requirements.txt
-└── README.md
-```
-
-## Try It
+## 🚀 Quick Start
 
 ```bash
-# Run tests
-python -m pytest tests/ -v
+# Install deps
+pip install -r requirements.txt
 
-# Create a GitHub issue, then watch the magic happen
+# Run tests
+python3 -m pytest tests/ -v
+
+# Start API
+python3 -m uvicorn src.api:app --reload --port 8000
+
+# Try it
+curl -X POST http://localhost:8000/add -H "Content-Type: application/json" -d '{"a": 2, "b": 3}'
 ```
 
-## KPIs
+## 🤖 ADW Pipeline (Autonomous SDLC)
 
-| KPI | Direction | Target |
-|-----|-----------|--------|
-| Presence | ↓ | <10% time in-loop |
-| Size | ↑ | >500 LOC per task |
-| Streak | ↑ | 20+ consecutive wins |
-| Attempts | ↓ | <1.5 average |
+Run the full pipeline on any GitHub issue:
+
+```bash
+python3 adws/adw_sdlc.py <issue-number>
+```
+
+What happens:
+1. **Plan** — Fetches issue, classifies (chore/bug/feature), generates spec
+2. **Build** — Implements from the spec using Claude Code
+3. **Test** — Runs tests, fixes failures automatically
+4. **Review** — Code quality check
+5. **PR** — Creates pull request for human review
+
+**Zero human intervention during execution.** You review the PR when it's done.
+
+## 📁 Project Structure
+
+```
+peter-framework-demo/
+├── CLAUDE.md                    # Agent instructions
+├── src/
+│   ├── calculator.py            # Core math functions
+│   └── api.py                   # FastAPI REST API
+├── tests/
+│   ├── test_calculator.py       # Unit tests
+│   └── test_api.py              # API integration tests
+├── adws/                        # AI Developer Workflows
+│   ├── adw_plan.py              # Planning agent
+│   ├── adw_build.py             # Build agent
+│   ├── adw_test.py              # Test agent
+│   ├── adw_review.py            # Review agent
+│   └── adw_sdlc.py              # Full SDLC pipeline
+├── .claude/commands/            # Slash command templates
+│   ├── classify_issue.md
+│   ├── feature.md
+│   ├── implement.md
+│   ├── review.md
+│   ├── chore.md
+│   └── bug.md
+├── specs/                       # Generated implementation plans
+├── requirements.txt
+└── scripts/
+    └── start.sh
+```
+
+## 📊 KPIs
+
+| KPI | Direction | What it measures |
+|-----|-----------|-----------------|
+| Presence ↓ | Less time babysitting | You're reviewing, not writing |
+| Size ↑ | Bigger tasks delegated | Agents handle complex work |
+| Streak ↑ | Consecutive successes | System is reliable |
+| Attempts ↓ | Fewer retries needed | One-shot success |
 
 ## Source
 
-Based on [Tactical Agentic Coding (TAC)](https://agenticengineer.com) by IndyDevDan.
+Based on [Tactical Agentic Coding (TAC)](https://agenticengineer.com) by IndyDevDan — Lessons 4-7.
